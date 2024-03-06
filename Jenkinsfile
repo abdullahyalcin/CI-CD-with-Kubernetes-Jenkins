@@ -25,26 +25,7 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/abdullahyalcin/CI-CD-with-Kubernetes-Jenkins.git'
             }
         }
-
-        // stage("Build Application") {
-        //     steps {
-        //         sh "mvn clean package"
-        //     }
-        // }
-
-        // stage("Test Application") {
-        //     steps {
-        //         sh "mvn test"
-        //     }
-        // }
-
-        // stage("Code Coverage with JaCoCo") {
-        //     steps {
-        //         sh "mvn jacoco:prepare-agent test jacoco:report"
-        //         archiveArtifacts 'target/site/jacoco/index.html'
-        //     }
-        // }
-
+        
         stage("Build & Push Docker Image") {
             steps {
                 script {
