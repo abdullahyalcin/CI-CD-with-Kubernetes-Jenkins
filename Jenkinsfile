@@ -12,7 +12,7 @@ pipeline{
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
         JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
         DOCKERHUB_USER = "abdullahyalcin"
-        export PATH="/usr/local/bin:$PATH"
+        PATH="/usr/local/bin:$PATH"
 
     }
     stages {
