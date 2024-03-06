@@ -32,11 +32,11 @@ pipeline{
         //     }
         // }
 
-        // stage("Test Application") {
-        //     steps {
-        //         sh "mvn test"
-        //     }
-        // }
+        stage("Test Application") {
+            steps {
+                sh "mvn test"
+            }
+        }
 
         stage("Code Coverage with JaCoCo") {
             steps {
