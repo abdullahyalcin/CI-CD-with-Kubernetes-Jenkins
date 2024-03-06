@@ -68,11 +68,14 @@ pipeline{
         stage("Trigger CD Pipeline") {
             steps {
                 script {
-                    sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://localhost:8080/job/ci-cd-kubernetes/configure/buildWithParameters?token=gitops-token'"
-                }
-            }
+                def localJenkinsUrl = 'http://localhost:8080'
+                def localJenkinsJobPath = 'job/gitops-complete-pipeline'
+                def localJenkinsToken = 'gitops-token'
+            
+            sh "curl -v -k --user abdullahyalcin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' '${localJenkinsUrl}/${localJenkinsJobPath}/buildWithParameters?token=${localJenkinsToken}'"
         }
-    }               
+    }
+}          
 
 
     post {
