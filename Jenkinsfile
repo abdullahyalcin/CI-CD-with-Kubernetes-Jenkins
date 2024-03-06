@@ -49,7 +49,7 @@ pipeline{
             steps {
                 script {
                     // Retrieve DockerHub token from Jenkins credentials
-                    withCredentials([string(credentialsId: 'docker-token', variable: 'DOCKERHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId:'docker-token', variable:'DOCKERHUB_TOKEN')]) {
                         
                         // Build the Docker image
                         docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_TOKEN) {
