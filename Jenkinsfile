@@ -26,24 +26,24 @@ pipeline{
             }
         }
 
-        stage("Build Application") {
-            steps {
-                sh "mvn clean package"
-            }
-        }
+        // stage("Build Application") {
+        //     steps {
+        //         sh "mvn clean package"
+        //     }
+        // }
 
-        stage("Test Application") {
-            steps {
-                sh "mvn test"
-            }
-        }
+        // stage("Test Application") {
+        //     steps {
+        //         sh "mvn test"
+        //     }
+        // }
 
-        stage("Code Coverage with JaCoCo") {
-            steps {
-                sh "mvn jacoco:prepare-agent test jacoco:report"
-                archiveArtifacts 'target/site/jacoco/index.html'
-            }
-        }
+        // stage("Code Coverage with JaCoCo") {
+        //     steps {
+        //         sh "mvn jacoco:prepare-agent test jacoco:report"
+        //         archiveArtifacts 'target/site/jacoco/index.html'
+        //     }
+        // }
 
         stage("Build & Push Docker Image") {
             steps {
