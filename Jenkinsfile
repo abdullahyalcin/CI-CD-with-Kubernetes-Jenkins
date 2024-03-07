@@ -16,7 +16,6 @@ pipeline{
         MAVEN_PATH = "${MAVEN_HOME}/mvn"
         PATH = "${MAVEN_PATH}:${PATH}"
         DOCKER_PATH = "/usr/local/bin/docker"
-        DOCKER_BIN = "${DOCKER_PATH}:${PATH}"
 }
 
     stages {
