@@ -13,6 +13,9 @@ pipeline{
         JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
         DOCKERHUB_USER = "abdullahyalcin"
         PATH="/usr/local/bin:$PATH"
+        MAVEN_HOME="/usr/local/Cellar/maven/3.9.6/libexec"
+        MAVEN_PATH="${MAVEN_HOME}/bin"
+        PATH="${MAVEN_PATH}:${PATH}"
 
     }
     stages {
@@ -25,6 +28,18 @@ pipeline{
         stage("Checkout from SCM") {
             steps {
                 git branch: 'main', url: 'https://github.com/abdullahyalcin/CI-CD-with-Kubernetes-Jenkins.git'
+            }
+        }
+
+        stage("Build Application") {
+            steps {
+                sh "mvn clean package"
+            }
+        }
+
+        stage("Test Application") {
+            steps {
+                sh "mvn test"
             }
         }
         
@@ -60,7 +75,7 @@ pipeline{
         stage ('Cleanup Artifacts') {
             steps {
                 script {
-                    sh "docker rmi ${IMAGE_NAME}"
+                    sh "docker rmi -f ${IMAGE_NAME}"
                 }
             }
         }
@@ -79,15 +94,21 @@ pipeline{
     }
 
     post {
-        failure {
-            emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
-                    subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failed", 
-                    mimeType: 'text/html',to: "apoyalcn98@gmail.com"
-            }
-         success {
-               emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
-                    subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Successful", 
-                    mimeType: 'text/html',to: "apoyalcn98@gmail.com"
-          }      
+        always {
+            emailext (
+                subject: "Pipeline Status: ${BUILD_NUMBER}",
+                body: '''<html>
+                        <body>
+                        <p>Build Status: ${BUILD_STATUS}</p>
+                        <p>Build Number: ${BUILD_NUMBER}</p>
+                        <p>Check the <a href="${BUILD_URL}">console output</a>.</p>
+                        </body>
+                        </html>''',
+                to: 'apoyalcn98@gmail.com',
+                from: 'jenkins@noreplay',
+                replyTo: 'apoyalcn98@gmail.com',
+                mimeType: 'text/html'
+            )
+        }
     }
 }
