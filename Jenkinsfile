@@ -12,10 +12,7 @@ pipeline{
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
         JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
         DOCKERHUB_USER = "abdullahyalcin"
-        MAVEN_HOME = "/usr/local/bin"
-        MAVEN_PATH = "${MAVEN_HOME}/mvn"
-        PATH = "${MAVEN_PATH}:${PATH}"
-        DOCKER_PATH = "/usr/local/bin/docker"
+        PATH = "/usr/local/bin:$PATH"
 }
 
     stages {
